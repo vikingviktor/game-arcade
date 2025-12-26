@@ -1060,20 +1060,13 @@ function updatePlayer() {
     const formationBottom = maxOffsetY + player.height;
     const bridgeBottom = canvas.height - 80; // Account for military base
     
-    // Vertical movement (free) - but keep formation on bridge
+    // Horizontal movement only (like Ski Slope) - no vertical movement
     // Support both keyboard and touch
-    const moveUp = keys['ArrowUp'] || keys['w'] || (touchControls.joystickActive && touchControls.joystickY < -0.3);
-    const moveDown = keys['ArrowDown'] || keys['s'] || (touchControls.joystickActive && touchControls.joystickY > 0.3);
     const moveLeft = keyPressed['ArrowLeft'] || keyPressed['a'] || (touchControls.joystickActive && touchControls.joystickX < -0.3);
     const moveRight = keyPressed['ArrowRight'] || keyPressed['d'] || (touchControls.joystickActive && touchControls.joystickX > 0.3);
     
-    if (moveUp) {
-        player.y = Math.max(bridgeTop, player.y - player.speed * speedMultiplier);
-    }
-    if (moveDown) {
-        const maxY = bridgeBottom - formationBottom;
-        player.y = Math.min(maxY, player.y + player.speed * speedMultiplier);
-    }
+    // Keep player at fixed vertical position
+    player.y = canvas.height - 180;
     
     // Horizontal movement (snap to lanes) - only when not moving between lanes
     if (player.targetLane === null) {
@@ -2013,6 +2006,36 @@ document.querySelectorAll('.speed-btn').forEach(btn => {
         btn.classList.add('active');
     });
 });
+
+// Pause button for Top War
+const pauseBtn = document.getElementById('pause-btn');
+if (pauseBtn) {
+    pauseBtn.addEventListener('click', () => {
+        if (currentGame instanceof SkiGame) {
+            // Handle ski game pause
+            if (currentGame.gameState === 'playing') {
+                currentGame.gameState = 'paused';
+                currentGame.stopMusic();
+                pauseBtn.textContent = '▶';
+            } else if (currentGame.gameState === 'paused') {
+                currentGame.gameState = 'playing';
+                currentGame.startMusic();
+                pauseBtn.textContent = '⏸';
+            }
+        } else {
+            // Handle Top War pause
+            if (gameState === 'playing') {
+                gameState = 'paused';
+                stopMusic();
+                pauseBtn.textContent = '▶';
+            } else if (gameState === 'paused') {
+                gameState = 'playing';
+                startMusic();
+                pauseBtn.textContent = '⏸';
+            }
+        }
+    });
+}
 
 // Initialize touch controls
 initTouchControls();
