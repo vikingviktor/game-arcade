@@ -1,0 +1,22 @@
+{
+  "name": "Game Arcade - Top War & Ski Slope",
+  "short_name": "Game Arcade",
+  "description": "Two exciting arcade games: Top War shooter and Ski Slope challenge",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#1e3c72",
+  "theme_color": "#1e3c72",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

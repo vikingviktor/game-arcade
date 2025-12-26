@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1e3c72">
+    <title>Top War - Unite & Attack!</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="ui-overlay">
+            <div id="stats">
+                <div class="stat">
+                    <span class="stat-label">Wave:</span>
+                    <span id="wave-counter">1</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Score:</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Troops:</span>
+                    <span id="troop-count">1</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Damage:</span>
+                    <span id="damage-level">1</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Lives:</span>
+                    <span id="lives">100</span>
+                </div>
+            </div>
+            <div id="controls-hint" class="desktop-only">
+                Use Arrow Keys to Move • Space to Shoot
+            </div>
+            <div id="speed-controls">
+                <button class="speed-btn" data-speed="0.5">0.5x</button>
+                <button class="speed-btn active" data-speed="1">1x</button>
+                <button class="speed-btn" data-speed="1.5">1.5x</button>
+                <button class="speed-btn" data-speed="2">2x</button>
+            </div>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+        <canvas id="menuCanvas" class="hidden"></canvas>
+        
+        <!-- Touch Controls for Top War -->
+        <div id="topwar-touch-controls" class="touch-controls hidden">
+            <div class="joystick-container">
+                <div id="joystick-outer">
+                    <div id="joystick-inner"></div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button id="shoot-btn" class="action-btn">SHOOT</button>
+                <button id="rocket-btn" class="action-btn">ROCKET</button>
+            </div>
+        </div>
+        
+        <!-- Touch Controls for Ski Slope -->
+        <div id="ski-touch-controls" class="touch-controls hidden">
+            <div class="ski-buttons">
+                <button id="ski-left-btn" class="ski-control-btn">◀</button>
+                <button id="ski-right-btn" class="ski-control-btn">▶</button>
+            </div>
+        </div>
+        
+        <div id="game-over" class="hidden">
+            <h1>GAME OVER</h1>
+            <p>Final Score: <span id="final-score">0</span></p>
+            <p>Wave Reached: <span id="final-wave">1</span></p>
+            <div class="menu-buttons">
+                <button id="restart-btn" style="pointer-events: all;">Play Again</button>
+                <button id="menu-btn-gameover" class="menu-btn" style="pointer-events: all;">Main Menu</button>
+            </div>
+        </div>
+        <div id="start-screen">
+            <h1>GAME ARCADE</h1>
+            <h2>Choose Your Game</h2>
+            <div class="game-selection">
+                <div class="game-card" id="topwar-card">
+                    <h3>TOP WAR</h3>
+                    <p class="game-desc">Unite & Attack!</p>
+                    <p class="desktop-only">Control your blue soldier with arrow keys</p>
+                    <p class="desktop-only">Shoot enemies with SPACE</p>
+                    <p class="mobile-only">Use joystick to move</p>
+                    <p class="mobile-only">Tap buttons to shoot</p>
+                    <p>Collect powerups to upgrade!</p>
+                    <button class="game-btn" data-game="topwar" style="pointer-events: all;">PLAY TOP WAR</button>
+                </div>
+                <div class="game-card" id="ski-card">
+                    <h3>SKI SLOPE</h3>
+                    <p class="game-desc">Downhill Challenge!</p>
+                    <p class="desktop-only">Use arrow keys to dodge obstacles</p>
+                    <p class="mobile-only">Tap left/right to dodge obstacles</p>
+                    <p>Avoid trees, bears, and slow skiers</p>
+                    <p>Survive as long as you can!</p>
+                    <button class="game-btn" data-game="ski" style="pointer-events: all;">PLAY SKI SLOPE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="menu-background.js"></script>
+    <script src="game.js"></script>
+    <script src="ski-game.js"></script>
+</body>
+</html>
