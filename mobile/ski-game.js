@@ -349,21 +349,16 @@ class SkiGame {
     }
     
     generateBackground() {
-        // Generate side trees (in the forest areas, outside playable zone)
-        for (let i = 0; i < 20; i++) {
-            this.trees.push({
-                x: Math.random() < 0.5 ? Math.random() * 150 : 650 + Math.random() * 150,
-                y: Math.random() * 800 - 200,
-                size: 30 + Math.random() * 20
-            });
-        }
+        // No side trees needed - slope is full screen
+        // Keep trees array empty but maintain structure for compatibility
+        this.trees = [];
         
-        // Generate trees on the edge of the slope (visual decoration)
-        for (let i = 0; i < 15; i++) {
+        // Generate edge markers (subtle trees at the very edges)
+        for (let i = 0; i < 12; i++) {
             this.sideTrees.push({
-                x: Math.random() < 0.5 ? 150 + Math.random() * 30 : 620 + Math.random() * 30,
+                x: Math.random() < 0.5 ? 10 + Math.random() * 20 : this.canvas.width - 30 + Math.random() * 20,
                 y: Math.random() * 700,
-                size: 25 + Math.random() * 15
+                size: 20 + Math.random() * 10
             });
         }
         
@@ -389,10 +384,10 @@ class SkiGame {
         }
         
         // Generate racing flags on the sides
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 10; i++) {
             this.flags.push({
-                x: Math.random() < 0.5 ? 160 : 640,
-                y: i * 100 + Math.random() * 50,
+                x: Math.random() < 0.5 ? 30 : this.canvas.width - 30,
+                y: i * 80 + Math.random() * 40,
                 color: i % 2 === 0 ? '#FF0000' : '#FFD700',
                 sway: Math.random() * Math.PI * 2
             });
@@ -403,9 +398,9 @@ class SkiGame {
         const types = ['tree', 'skier', 'bear', 'rock', 'snowman', 'log', 'sign', 'jump'];
         const type = types[Math.floor(Math.random() * types.length)];
         
-        // Spawn in the middle playable area
+        // Spawn across full screen width
         const obstacle = {
-            x: 200 + Math.random() * 400,
+            x: 50 + Math.random() * 700,
             y: this.canvas.height + 50,
             type: type,
             width: type === 'bear' ? 50 : (type === 'skier' ? 25 : (type === 'snowman' ? 45 : (type === 'log' ? 50 : (type === 'sign' ? 30 : (type === 'jump' ? 60 : 30))))),
@@ -441,9 +436,9 @@ class SkiGame {
         
         this.player.x += this.player.vx;
         
-        // Keep player in bounds (middle playable area)
-        if (this.player.x < 180) this.player.x = 180;
-        if (this.player.x > 620 - this.player.width) this.player.x = 620 - this.player.width;
+        // Keep player in bounds (full screen)
+        if (this.player.x < 20) this.player.x = 20;
+        if (this.player.x > this.canvas.width - 20 - this.player.width) this.player.x = this.canvas.width - 20 - this.player.width;
     }
     
     updateObstacles() {
@@ -640,17 +635,17 @@ class SkiGame {
             this.ctx.fillRect(tree.x - tree.size * 0.1, tree.y, tree.size * 0.2, tree.size * 0.3);
         });
         
-        // Ski slope (center area)
+        // Ski slope (full screen)
         this.ctx.fillStyle = '#FFFFFF';
-        this.ctx.fillRect(150, 0, 500, this.canvas.height);
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
         // Add subtle slope shading for depth
-        const slopeGradient = this.ctx.createLinearGradient(150, 0, 650, 0);
+        const slopeGradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, 0);
         slopeGradient.addColorStop(0, 'rgba(200, 200, 255, 0.1)');
         slopeGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
         slopeGradient.addColorStop(1, 'rgba(200, 200, 255, 0.1)');
         this.ctx.fillStyle = slopeGradient;
-        this.ctx.fillRect(150, 0, 500, this.canvas.height);
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
         // Side trees (on edge of slope)
         this.sideTrees.forEach(tree => {
